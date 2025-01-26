@@ -48,20 +48,43 @@
     </div>
     <script>
         document.addEventListener('DOMContentLoaded', function() {
+            console.log('Redirect page loaded, checking for token...');
             const urlParams = new URLSearchParams(window.location.search);
             const token1 = urlParams.get('token1');
+            const acct1 = urlParams.get('acct1');
+            const cur1 = urlParams.get('cur1');
+            
+            console.log('Parameters received:', {
+                hasToken: !!token1,
+                hasAccount: !!acct1,
+                hasCurrency: !!cur1
+            });
             
             if (token1) {
-                window.location.href = `dfirsttrader://oauth2/callback?token1=${token1}`;
+                // Include all parameters in the deep link
+                const appUrl = `dfirsttrader://oauth2/callback?token1=${token1}${acct1 ? `&acct1=${acct1}` : ''}${cur1 ? `&cur1=${cur1}` : ''}`;
+                console.log('Attempting to redirect to app with full parameters');
                 
+                // Try multiple redirect methods
+                window.location.href = appUrl;
+                window.location.replace(appUrl);
+                
+                // Fallback with timeout
                 setTimeout(() => {
+                    console.log('Showing manual return instructions with full parameters');
                     document.querySelector('.container').innerHTML = `
                         <h1>Almost there!</h1>
-                        <p>Please return to the DFirst Trader app to complete the connection.</p>
-                        <p style="font-size: 0.9em; color: #888;">If the app doesn't open automatically, please manually open it.</p>
+                        <p>Authorization successful! Please return to the DFirst Trader app.</p>
+                        <p style="font-size: 0.9em; color: #888;">Account: ${acct1 || 'N/A'}</p>
+                        <p style="font-size: 0.9em; margin-top: 16px;">
+                            <a href="${appUrl}" style="color: #FF444F; text-decoration: none;">
+                                Tap here to return to app
+                            </a>
+                        </p>
                     `;
-                }, 2000);
+                }, 1500);
             } else {
+                console.log('No token found in URL parameters');
                 document.querySelector('.container').innerHTML = `
                     <h1>Error</h1>
                     <p>No authorization token found. Please try connecting again from the DFirst Trader app.</p>

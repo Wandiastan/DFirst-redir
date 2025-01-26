@@ -29,5 +29,5 @@ This site is deployed on Render.com as a static site. To deploy:
 
 The redirect URL should be in the format:
 ```
-https://[your-render-domain]/index.html?token1=[deriv-oauth-token]
+https://autodrv-oauth.onrender.com?token1=[deriv-oauth-token]
 ``` 
