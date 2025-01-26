@@ -1,0 +1,15 @@
+{
+  "name": "dfirst-deriv-redirect",
+  "version": "1.0.0",
+  "description": "OAuth2 redirect handler for DFirst Trader",
+  "scripts": {
+    "start": "npx serve .",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "serve": "^14.2.1"
+  }
+}
